@@ -1,5 +1,5 @@
 // обработка опции запроса
-const getContent = async (param, option, value) => {
+const fetchContent = async (param, option, value) => {
   if (param === "byId") {
     switch(option){
       case "planets": return await starWars.getPlanetsById(value);
@@ -29,8 +29,8 @@ const _normalizeValue = (value) => {
 };
 
 // запрос имени планеты
-const _getHomeWorldName = async (link) => {
-  if (!link || link.length === 0) return link;
+const _fetchHomeWorldName = async (link) => {
+  if (!link || !link.length) return link;
   const url = new URL(link);
   const id = url.pathname.split("/")[3];
   const { name } = await starWars.getPlanetsById(id);
@@ -40,7 +40,7 @@ const _getHomeWorldName = async (link) => {
 // обработка значения, в случае, если в значении лежит ссылка и значение необходимо запросить по этой ссылке
 const _getExtendedValue = async (key, value) => {
   switch (key) {
-    case "homeworld": return await _getHomeWorldName(value);
+    case "homeworld": return await _fetchHomeWorldName(value);
     default: return value;
   }
 };

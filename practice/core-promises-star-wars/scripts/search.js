@@ -1,11 +1,3 @@
-// Методы, которые могут пригодиться:
-// starWars.searchCharacters(query), 
-// starWars.searchPlanets(query), 
-// starWars.searchSpecies(query).
-// starWars.getCharactersById(id), 
-// starWars.getPlanetsById(id), 
-// starWars.getSpeciesById(id)
-
 // спиннер
 const spinner = document.querySelector(".spinner");
 const showSpinner = () => spinner.style.visibility = "visible";
@@ -14,8 +6,10 @@ const hideSpinner = () => spinner.style.visibility = "hidden";
 // отображение контента
 const contentElement = document.getElementById("content");
 const resultContainer = document.getElementById("result-container");
+const hideContentButton = document.querySelector(".delete");
 const setContent = content => contentElement.innerHTML = content;
 const showContentBlock = () => resultContainer.style.visibility = "visible";
+const hideContentBlock = () => resultContainer.style.visibility = "hidden";
 
 // элементы поиска
 const byQueryBlock = document.getElementById("byQueryBlock");
@@ -31,7 +25,7 @@ const submitByIdButton = document.getElementById("byIdBtn");
 // взаимодействие пользователя со страницей
 const handleSubmitClick = async (param, option, value) => {
   showSpinner();
-  const content = await getContent(param, option, value);
+  const content = await fetchContent(param, option, value);
   const serializeContent = param === "byQuery" ? await contentSerializer(content) : await oneEntityContentSerializer(content);
   setContent(serializeContent);
   showContentBlock();
@@ -40,3 +34,4 @@ const handleSubmitClick = async (param, option, value) => {
 
 submitByQueryButton.addEventListener("click", () => handleSubmitClick("byQuery", byQuerySelect.value, byQueryInput.value));
 submitByIdButton.addEventListener("click", () => handleSubmitClick("byId", byIdSelect.value, byIdInput.value));
+hideContentButton.addEventListener("click", () => hideContentBlock());
